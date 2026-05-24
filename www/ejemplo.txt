@@ -1,0 +1,7 @@
+Este es un archivo de texto plano (text/plain)
+
+El servidor lo sirve sin interpretar HTML.
+Esto demuestra que el MIME type text/plain funciona correctamente.
+
+Archivo: ejemplo.txt
+Servidor: MiniHTTPd

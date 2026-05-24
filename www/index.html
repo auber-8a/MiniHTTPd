@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>MiniHTTPd - Prueba de MIME Types</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="/script.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>MiniHTTPd Server</h1>
+        <div class="subtitle">
+            Servidor HTTP/1.1 en C con epoll - Prueba de MIME Types
+        </div>
+        
+        <!-- Seccion 1: HTML -->
+        <div class="card">
+            <h2>1. HTML (text/html)</h2>
+            <div class="test-area">
+                <p>El navegador renderiza correctamente: <strong>negrita</strong>, <em>cursiva</em> y <span style="color: #667eea;">colores</span>.</p>
+                <div class="info">
+                    MIME Type: text/html - Archivo: index.html
+                </div>
+            </div>
+        </div>
+        
+        <!-- Seccion 2: CSS -->
+        <div class="card">
+            <h2>2. CSS (text/css)</h2>
+            <div class="test-area">
+                <div class="css-demo">
+                    Los estilos CSS funcionan correctamente.
+                </div>
+                <div class="info">
+                    MIME Type: text/css - Archivo: style.css
+                </div>
+            </div>
+        </div>
+        
+        <!-- Seccion 3: JavaScript -->
+        <div class="card">
+            <h2>3. JavaScript (application/javascript)</h2>
+            <div class="test-area">
+                <p id="js-test">Esperando JavaScript...</p>
+                <button onclick="testJavaScript()">Probar JavaScript</button>
+                <div class="info">
+                    MIME Type: application/javascript - Archivo: script.js
+                </div>
+            </div>
+        </div>
+        
+        <!-- Seccion 4: Imagen PNG -->
+        <div class="card">
+            <h2>4. Imagen PNG (image/png)</h2>
+            <div class="test-area">
+                <div class="image-gallery">
+                    <div class="image-card">
+                        <img src="/image.png" alt="Imagen PNG" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22200%22%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill%3D%22%23667eea%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%20fill%3D%22white%22%3EPNG%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                        <p><small>PNG - image/png</small></p>
+                    </div>
+                </div>
+                <div class="info">
+                    MIME Type: image/png - Archivo: image.png
+                </div>
+            </div>
+        </div>
+        
+        <!-- Seccion 5: Imagen JPEG -->
+        <div class="card">
+            <h2>5. Imagen JPG (image/jpg)</h2>
+            <div class="test-area">
+                <div class="image-gallery">
+                    <div class="image-card">
+                        <img src="/linux.jpg" alt="Imagen JPEG" onerror="this.src='data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22200%22%20height%3D%22200%22%3E%3Crect%20width%3D%22200%22%20height%3D%22200%22%20fill%3D%22%23764ba2%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%20fill%3D%22white%22%3EJPEG%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                        <p><small>JPG - image/jpg</small></p>
+                    </div>
+                </div>
+                <div class="info">
+                    MIME Type: image/jpg - Archivo: linux.jpg
+                </div>
+            </div>
+        </div>
+        
+        <!-- Seccion 6: Texto plano -->
+        <div class="card">
+            <h2>6. Texto Plano (text/plain)</h2>
+            <div class="test-area">
+                <button onclick="loadTextFile()">Cargar archivo .txt</button>
+                <pre id="text-output"></pre>
+                <div class="info">
+                    MIME Type: text/plain - Archivo: ejemplo.txt
+                </div>
+            </div>
+        </div>
+        
+        <!-- Seccion 7: Informacion del servidor -->
+        <div class="card">
+            <h2>7. Informacion del Servidor</h2>
+            <div class="test-area">
+                <ul>
+                    <li>Servidor HTTP/1.1 en C</li>
+                    <li>epoll para conexiones concurrentes</li>
+                    <li>Conexiones persistentes (Keep-Alive)</li>
+                    <li>Soporte MIME: HTML, CSS, JS, PNG, JPEG, TXT</li>
+                    <li>Seguridad: Directory traversal bloqueado</li>
+                    <li>Codigos HTTP: 200, 400, 403, 404, 405, 500</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>MiniHTTPd - Servidor HTTP implementado en C con epoll</p>
+            <p>Prueba completa de MIME Types</p>
+        </div>
+    </div>
+</body>
+</html>
