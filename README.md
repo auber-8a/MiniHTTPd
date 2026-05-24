@@ -80,7 +80,7 @@ El desarrollo se diseñó bajo un enfoque de seguridad defensiva para mitigar ri
 
 ## Modelo de Concurrencia
 
-El servidor utiliza una arquitectura orientada a eventos en un solo hilo (*I/O multiplexing*) mediante el uso de la API `epoll` del kernel de Linux[cite: 6, 13, 18]:
+El servidor utiliza una arquitectura orientada a eventos en un solo hilo (*I/O multiplexing*) mediante el uso de la API `epoll` del kernel de Linux:
 
 ```c
 while (running) {
@@ -147,3 +147,7 @@ Prueba de método no soportado (405):
 ```bash
 curl -X POST http://localhost:8080/ -v
 ```
+---
+
+## Autor:
+Ochoa Aubertin
