@@ -40,40 +40,41 @@ minihttpd/
     ├── image.png
     ├── linux.jpg
     └── ejemplo.txt
+```
 
 ## Especificaciones Técnicas
 
 ### Códigos de Estado Implementados
-El servidor responde con la semántica HTTP adecuada según el escenario[cite: 7]:
+El servidor responde con la semántica HTTP adecuada según el escenario:
 
 | Código | Descripción | Condición de Activación |
 | :--- | :--- | :--- |
-| **200 OK** | OK | El archivo solicitado existe en `www/` y se transmite con éxito[cite: 4, 38]. |
-| **400 Bad Request** | Bad Request | Solicitud mal formada, encabezados inválidos o URI que excede el límite seguro[cite: 39, 51]. |
-| **403 Forbidden** | Forbidden | Intento de *Directory Traversal* detectado o restricciones de lectura en el archivo[cite: 41, 48]. |
-| **404 Not Found** | Not Found | El recurso solicitado no se encuentra dentro del directorio raíz `www/`[cite: 43]. |
-| **405 Method Not Allowed** | Method Not Allowed | Se recibe un método HTTP diferente a `GET` (por ejemplo, `POST`, `PUT`)[cite: 45, 50]. |
-| **500 Internal Server Error** | Internal Server Error | Errores críticos internos del sistema (fallos en `malloc`, lectura de archivos, etc.)[cite: 46]. |
+| **200 OK** | OK | El archivo solicitado existe en `www/` y se transmite con éxito. |
+| **400 Bad Request** | Bad Request | Solicitud mal formada, encabezados inválidos o URI que excede el límite seguro. |
+| **403 Forbidden** | Forbidden | Intento de *Directory Traversal* detectado o restricciones de lectura en el archivo. |
+| **404 Not Found** | Not Found | El recurso solicitado no se encuentra dentro del directorio raíz `www/`. |
+| **405 Method Not Allowed** | Method Not Allowed | Se recibe un método HTTP diferente a `GET` (por ejemplo, `POST`, `PUT`). |
+| **500 Internal Server Error** | Internal Server Error | Errores críticos internos del sistema (fallos en `malloc`, lectura de archivos, etc.). |
 
 ### Tipos MIME Soportados
-El módulo `mime.c` se encarga de analizar las extensiones de los archivos para enviar el encabezado `Content-Type` correcto[cite: 8, 21]:
+El módulo `mime.c` se encarga de analizar las extensiones de los archivos para enviar el encabezado `Content-Type` correcto:
 
-- `.html` -> `text/html` [cite: 23]
-- `.css` -> `text/css` [cite: 24, 25]
-- `.js` -> `application/javascript` [cite: 26, 27]
-- `.png` -> `image/png` [cite: 28, 29]
-- `.jpg` / `.jpeg` -> `image/jpeg` [cite: 30, 31]
+- `.html` -> `text/html` 
+- `.css` -> `text/css` 
+- `.js` -> `application/javascript` 
+- `.png` -> `image/png` 
+- `.jpg` / `.jpeg` -> `image/jpeg`
 - `.txt` -> `text/plain`
 
 ---
 
 ## Seguridad
 
-El desarrollo se diseñó bajo un enfoque de seguridad defensiva para mitigar riesgos comunes en la interacción con el sistema de archivos y redes[cite: 15]:
+El desarrollo se diseñó bajo un enfoque de seguridad defensiva para mitigar riesgos comunes en la interacción con el sistema de archivos y redes:
 
-1. **Directory Traversal (`403 Forbidden`):** Se evita que un atacante escape del directorio raíz `www/` mediante el uso de cadenas relativas (`../`)[cite: 48]. El servidor procesa y valida las rutas absolutas combinando la raíz del servidor con el recurso solicitado, aplicando funciones de sanitización o `realpath()` para asegurar que el archivo final resida estrictamente dentro del espacio permitido[cite: 48].
-2. **Buffer Overflows:** Queda estrictamente prohibido el uso de funciones inseguras de la biblioteca estándar como `strcpy` o `sprintf`[cite: 49]. En su lugar, se utilizan alternativas seguras con control estricto de límites (`strncpy`, `snprintf`)[cite: 49].
-3. **Restricción de Recursos:** Se definen buffers estáticos y límites estrictos para la longitud de la línea de solicitud y las cabeceras URI[cite: 51]. Cualquier exceso es rechazado inmediatamente de forma segura con un estado `400 Bad Request`[cite: 51].
+1. **Directory Traversal (`403 Forbidden`):** Se evita que un atacante escape del directorio raíz `www/` mediante el uso de cadenas relativas (`../`). El servidor procesa y valida las rutas absolutas combinando la raíz del servidor con el recurso solicitado, aplicando funciones de sanitización o `realpath()` para asegurar que el archivo final resida estrictamente dentro del espacio permitido.
+2. **Buffer Overflows:** Queda estrictamente prohibido el uso de funciones inseguras de la biblioteca estándar como `strcpy` o `sprintf`. En su lugar, se utilizan alternativas seguras con control estricto de límites (`strncpy`, `snprintf`).
+3. **Restricción de Recursos:** Se definen buffers estáticos y límites estrictos para la longitud de la línea de solicitud y las cabeceras URI. Cualquier exceso es rechazado inmediatamente de forma segura con un estado `400 Bad Request`.
 
 ---
 
@@ -92,7 +93,7 @@ while (running) {
         }
     }
 }
-
+```
 
 ## Compilación y Ejecución
 
@@ -101,16 +102,19 @@ El proyecto incluye un `Makefile` para automatizar el ciclo de construcción:
 ### Compilar el servidor
 ```bash
 make
+```
 
 ### Limpiar los binarios generados
 ```bash
 make clean
+```
 
 ### Lanzar el servidor (Puerto por defecto u opcional)
 ```bash
 ./minihttpd
 # O especificando un puerto alternativo
 ./minihttpd 9090
+```
 
 ## Pruebas de Funcionamiento
 ### Desde la Terminal (utilizando `curl`)
@@ -118,6 +122,7 @@ make clean
 **Petición exitosa de recurso raíz:**
 ```bash
 curl -v http://localhost:8080/
+```
 
 
 Petición de recursos con diferentes tipos MIME:
@@ -125,17 +130,20 @@ Petición de recursos con diferentes tipos MIME:
 curl -v http://localhost:8080/style.css
 curl -v http://localhost:8080/script.js
 curl -v http://localhost:8080/image.png
-
+```
 
 Prueba de recurso no existente (404):
 ```bash
 curl -v http://localhost:8080/archivo_fantasma.html
-
+```
 
 Prueba de inyección/ataque Directory Traversal (403):
 ```bash
 curl -v http://localhost:8080/../../etc/passwd
+```
 
-curl -v http://localhost:8080/../../etc/passwd
+Prueba de método no soportado (405):
+
 ```bash
 curl -X POST http://localhost:8080/ -v
+```
