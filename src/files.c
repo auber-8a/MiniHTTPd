@@ -26,10 +26,15 @@ int resolver_ruta_segura(const char *uri, char *ruta_destino, size_t max_len) {
         return -403;
     }
 
+    int escrito;
     if (strcmp(uri_limpia, "/") == 0) {
-        snprintf(ruta_candidata, sizeof(ruta_candidata), "%s/index.html", base_real);
+        escrito = snprintf(ruta_candidata, sizeof(ruta_candidata), "%s/index.html", base_real);
     } else {
-        snprintf(ruta_candidata, sizeof(ruta_candidata), "%s%s", base_real, uri_limpia);
+        escrito = snprintf(ruta_candidata, sizeof(ruta_candidata), "%s%s", base_real, uri_limpia);
+    }
+
+    if (escrito < 0 || (size_t)escrito >= sizeof(ruta_candidata)) {
+        return -403;
     }
 
     if (!realpath(ruta_candidata, resuelta)) {
