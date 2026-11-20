@@ -31,7 +31,6 @@ El servidor puede:
 MiniHTTPd/
 ├── Makefile
 ├── README.md
-├── DOCUMENTACION.md
 ├── include/
 │   ├── files.h
 │   ├── http.h
